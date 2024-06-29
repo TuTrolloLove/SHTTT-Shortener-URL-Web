@@ -7,7 +7,7 @@
 ## 📚 Contenido
 - Página 404
 - Renderizado en el servidor con SSR Vercel
-- Un componente interactivo usando React
+- Componente interactivo usando React
 - Prisma como ORM
 - Base de Datos MySQL
 
