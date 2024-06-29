@@ -1,0 +1,108 @@
+---
+import { PrismaClient } from '@prisma/client';
+import Link from './Link.tsx';
+
+let shortURLr = "";
+const prisma = new PrismaClient();
+if (Astro.request.method === 'POST') {
+
+    // Obtener el URL del formulario
+    let inputURL = "";
+
+    const formData = await Astro.request.formData();
+    inputURL = formData.get("inputURL") as string;
+
+    console.log("inputURL: " + inputURL);
+
+    // Obtener array de URL convertidas
+    const urlConvertedDB: { shortURL: string }[] = await prisma.uRLS.findMany({
+      select: {
+        shortURL: true,
+      },
+    });
+    const shortUrls = urlConvertedDB.map((urlObject) => urlObject.shortURL);
+    console.log("Soy de Prisma" + shortUrls)
+
+    // Generar la URL y comprobar que no está repetida
+    function generateShortURL() {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let shortURL = '';
+        for (let i = 0; i < 6; i++) {
+        shortURL += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
+    return shortURL;
+    }
+
+    let urlConverted = "";
+    let isUnique = false;
+
+    while (!isUnique) {
+    urlConverted = generateShortURL();
+    isUnique = !urlConvertedDB.some(urlObj => urlObj.shortURL === urlConverted);
+    }
+
+    console.log("Unique short URL generated: ", urlConverted);
+
+
+    await prisma.uRLS.create({
+      data: {
+        id: 2,
+        originalURL: inputURL,
+        shortURL: urlConverted,
+      },
+    });
+
+    shortURLr = urlConverted;
+
+    prisma.$disconnect();
+}
+---
+
+<html>
+  <body>
+    <div class="form">
+      <form method="POST">
+        <h1 class="h1URL">Introduce your URL (format: https://www.google.com)</h1>
+        <input type="text" id="inputURL" name="inputURL" required />
+        <button type="submit" class="btnSubmit">SHORT</button>
+        <Link shortURL={shortURLr} client:visible/> 
+      </form>
+      <h2> If you use the service, you will accept that we store in our database the URL that you introduced, the 6 characters of your short link and an ID to identify it.</h2>
+      <slot>
+    </div>
+  </body>
+</html>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+h1, h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: white;
+}
+input {
+    width: 100%;
+}
+button {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background-color: blue;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+p {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+    color: white;
+}
+</style>

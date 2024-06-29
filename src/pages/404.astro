@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+// Captura la ruta
+const url = Astro.url.pathname.slice(1);
+console.log(url)
+// La coge de la BD
+const shortURL = await prisma.uRLS.findFirst({
+  where: { shortURL: url },
+  select: { originalURL: true },
+});
+console.log(shortURL)
+let URLRedirect = "";
+if(shortURL && shortURL.originalURL.length !== 0){
+    URLRedirect = shortURL.originalURL;
+}
+
+prisma.$disconnect();
+---
+
+<script define:vars={{URLRedirect}} is:inline>
+    if (URLRedirect.length !== 0){
+        window.location.replace(URLRedirect);
+    }
+    </script>
+
+<Layout title="404 Not Found">
+
+    <div class="flex flex-col justify-center items-center">
+        <h1 class="text-white text-3xl text-center">
+            Esta página no existe...
+        </h1>
+        <img src="https://midu.dev/images/this-is-fine-404.gif" />
+    </div>
+</Layout>

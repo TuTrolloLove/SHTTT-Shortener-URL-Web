@@ -1,0 +1,25 @@
+---
+interface Props {
+	shortURL: string;
+}
+
+const { shortURL } = Astro.props;
+
+if(shortURL != null){
+    console.log("No soy null")
+    console.log(shortURL)
+} else {
+    console.log("Soy null")
+}
+---
+<html>
+<p id="pLink"></p>
+</html>
+
+<script define:vars={(shortURL)} is:inline>
+    if(shortURL != null){
+        console.log("Hola")
+    } else {
+        console.log("adios")
+    }
+</script>
