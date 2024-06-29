@@ -46,12 +46,11 @@ if (Astro.request.method === 'POST') {
 
 
     await prisma.uRLS.create({
-      data: {
-        id: 2,
-        originalURL: inputURL,
-        shortURL: urlConverted,
-      },
-    });
+    data: {
+      originalURL: inputURL,
+      shortURL: urlConverted,
+  },
+});
 
     shortURLr = urlConverted;
 

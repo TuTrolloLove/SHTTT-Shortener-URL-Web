@@ -14,11 +14,10 @@ const shortURL = await prisma.uRLS.findFirst({
 });
 console.log(shortURL)
 let URLRedirect = "";
+prisma.$disconnect();
 if(shortURL && shortURL.originalURL.length !== 0){
     URLRedirect = shortURL.originalURL;
 }
-
-prisma.$disconnect();
 ---
 
 <script define:vars={{URLRedirect}} is:inline>
