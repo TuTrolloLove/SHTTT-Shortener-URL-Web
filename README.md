@@ -1,8 +1,8 @@
 # ✂️ SHTTT
 
-¡Bienvenido/a a SHTTT, un acortador de enlaces!
+¡Bienvenido/a a [SHTTT](https://shttt.vercel.app), un acortador de enlaces!
 
-![Imgur Image](https://i.imgur.com/HGVQbK4_d.webp?maxwidth=760&fidelity=grand)
+![Imgur Image](https://imgur.com/mlkfOFQ)
 
 ## 📚 Contenido
 - Página 404
