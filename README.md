@@ -2,7 +2,7 @@
 
 ¡Bienvenido/a a [SHTTT](https://shttt.vercel.app), un acortador de enlaces!
 
-![Imgur Image](https://imgur.com/mlkfOFQ)
+![Imgur Image](https://i.imgur.com/mlkfOFQ.png)
 
 ## 📚 Contenido
 - Página 404
