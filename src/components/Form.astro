@@ -13,8 +13,6 @@ if (Astro.request.method === 'POST') {
     const formData = await Astro.request.formData();
     inputURL = formData.get("inputURL") as string;
 
-    console.log("inputURL: " + inputURL);
-
     // Obtener array de URL convertidas
     const urlConvertedDB: { shortURL: string }[] = await prisma.uRLS.findMany({
       select: {
@@ -22,7 +20,6 @@ if (Astro.request.method === 'POST') {
       },
     });
     const shortUrls = urlConvertedDB.map((urlObject) => urlObject.shortURL);
-    console.log("Soy de Prisma" + shortUrls)
 
     // Generar la URL y comprobar que no está repetida
     function generateShortURL() {
@@ -43,8 +40,6 @@ if (Astro.request.method === 'POST') {
     isUnique = !urlConvertedDB.some(urlObj => urlObj.shortURL === urlConverted);
     }
 
-    console.log("Unique short URL generated: ", urlConverted);
-
 
     await prisma.uRLS.create({
     data: {
@@ -62,12 +57,13 @@ if (Astro.request.method === 'POST') {
   <body>
     <div class="form">
       <form method="POST">
-        <h1 class="h1URL">Introduce your URL</h1>
+        <h1>SSTTT: Your URL Shortener</h1>
+        <h2 class="">Introduce your URL</h2>
         <input type="text" id="inputURL" name="inputURL" required />
         <button type="submit" class="btnSubmit">SHORT</button>
         <Link shortURL={shortURLr} client:visible/> 
       </form>
-      <h2> If you use the service, you will accept that we store in our database the URL that you introduced, the 6 characters of your short link and an ID to identify it.</h2>
+      <h3> If you use the service, you will accept that we store in our database the URL that you introduced, the 6 characters of your short link and an ID to identify it.</h3>
       <slot>
     </div>
   </body>
@@ -75,6 +71,7 @@ if (Astro.request.method === 'POST') {
 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 h1, h2 {
   font-family: "Bebas Neue", sans-serif;
   font-weight: 400;
@@ -83,6 +80,18 @@ h1, h2 {
     margin-bottom: 1rem;
     text-align: center;
     color: white;
+}
+h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: white;
+    border: 1px solid blue;
+    background-color: rgb(2, 2, 155);
+    border-radius: 5px; 
 }
 input {
     width: 100%;
@@ -98,10 +107,5 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
-p {
-    margin-top: 1rem;
-    font-size: 1.2rem;
-    text-align: center;
-    color: white;
-}
+
 </style>

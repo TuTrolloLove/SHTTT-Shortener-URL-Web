@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 
 // Captura la ruta
 const url = Astro.url.pathname.slice(1);
-console.log(url)
+
 // La coge de la BD
 const shortURL = await prisma.uRLS.findFirst({
   where: { shortURL: url },
   select: { originalURL: true },
 });
-console.log(shortURL)
+
 let URLRedirect = "";
 prisma.$disconnect();
 if(shortURL && shortURL.originalURL.length !== 0){
