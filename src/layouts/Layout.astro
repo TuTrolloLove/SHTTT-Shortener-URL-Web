@@ -11,32 +11,29 @@ const { title } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="SHTTT, your favorite URL Shortener" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class="absolute top-0 z-[-2] h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px]"></div>
+		<div class="absolute top-0 z-[-2] h-[130vh] lg:h-screen w-screen bg-[#000000] bg-[radial-gradient(#ffffff33_1px,#00091d_1px)] bg-[size:20px_20px] md:bg-[size:15px_15px]"></div>
 		<slot />
 	</body>
 </html>
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
+
 	html {
 		font-family: system-ui, sans-serif;
-
-		background-size: 224px;
+		-ms-overflow-style: none; /* Para Internet Explorer 10+ */
+    overflow: scroll !important;
+}
+	
+	html::-webkit-scrollbar {
+    display: none;
+}
+	body{
+		scrollbar-width: none;
 	}
 	code {
 		font-family:
